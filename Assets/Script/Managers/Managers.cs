@@ -13,7 +13,7 @@ public class Managers : MonoBehaviour
     #region private Manager º¯¼öµé
 
     InputManager _input = new InputManager();
-    ResourceManager _resourceManager;
+    ResourceManager _resourceManager = new ResourceManager();
 
     #endregion
 

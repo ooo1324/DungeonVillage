@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager
 {
@@ -9,10 +10,15 @@ public class InputManager
     public Action<Define.MouseEvent> MouseAction = null;
 
     bool _pressed = false;
+
     public void OnUpdate()
-    {      
+    {
+        // UI가 클릭됐을 경우 리턴
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.anyKey && KeyAction != null)
-            KeyAction?.Invoke();
+            KeyAction.Invoke();
 
         if (MouseAction != null)
         {
@@ -21,13 +27,12 @@ public class InputManager
                 MouseAction.Invoke(Define.MouseEvent.Press);
                 _pressed = true;
             }
-            else 
+            else
             {
                 if (_pressed)
                     MouseAction.Invoke(Define.MouseEvent.Click);
                 _pressed = false;
             }
         }
-
     }
 }
