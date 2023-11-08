@@ -4,10 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 확장 메서드 클래스
+/// </summary>
 public static class Extension
 {
-    public static void AddUIEvent(this GameObject obj, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+    public static T GetOrAddComponent<T>(this GameObject obj) where T : UnityEngine.Component
     {
-        UI_Base.AddUIEvent(obj, action, type);
+        return Util.GetOrAddComponent<T>(obj);
+    }
+
+    public static void BindEvent(this GameObject obj, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+    {
+        UI_Base.BindEvent(obj, action, type);
     }
 }

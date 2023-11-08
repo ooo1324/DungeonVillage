@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        //Managers.Input.KeyAction -= OnKeyboard;
-        //Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
     }

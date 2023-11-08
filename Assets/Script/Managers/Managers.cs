@@ -12,8 +12,11 @@ public class Managers : MonoBehaviour
 
     #region private Manager 函荐甸
 
-    InputManager _input = new InputManager();
+    InputManager _inputManager = new InputManager();
     ResourceManager _resourceManager = new ResourceManager();
+    SceneManagerEx _sceneManager = new SceneManagerEx();
+    SoundManager _soundManager = new SoundManager();
+    UIManager _uiManager = new UIManager();
 
     #endregion
 
@@ -22,12 +25,27 @@ public class Managers : MonoBehaviour
     /// <summary>
     /// Input Manager : 涝仿 包府 概聪历
     /// </summary>
-    public static InputManager Input { get { return Instance._input; } }
+    public static InputManager Input { get { return Instance._inputManager; } }
 
     /// <summary>
     /// ResourceManager : 府家胶 Load, Destroy 包府 概聪历
     /// </summary>
-    public static ResourceManager ResourceManager { get { return Instance._resourceManager; } }
+    public static ResourceManager Resource { get { return Instance._resourceManager; } }
+
+    /// <summary>
+    /// Scene Manager : 纠 包府 概聪历
+    /// </summary>
+    public static SceneManagerEx Scene { get { return Instance._sceneManager; } }
+
+    /// <summary>
+    /// Sound Manager : 荤款靛 包府 概聪历
+    /// </summary>
+    public static SoundManager Sound { get { return Instance._soundManager; } }
+
+    /// <summary>
+    /// UIManager : UI 包府 概聪历
+    /// </summary>
+    public static UIManager UI { get { return Instance._uiManager; } }
     #endregion
 
 

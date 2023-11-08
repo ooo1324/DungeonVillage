@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class UI_Scene : UI_Base
 {
-    void Start()
+    public override void Init()
     {
-        
+        Managers.UI.SetCanvas(gameObject, false);
     }
 
-    void Update()
-    {
-        
-    }
 }
