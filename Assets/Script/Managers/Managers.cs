@@ -77,7 +77,17 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(managerObj);
 
             _instance = managerObj.GetComponent<Managers>();
+
+            _instance._soundManager.Init();
         }
 
+    }
+
+    public static void Clear()
+    {
+        Sound.Clear();
+        Input.Clear();
+        Scene.Clear();
+        UI.Clear();
     }
 }

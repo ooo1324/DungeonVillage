@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Scene Manager (ex : 이름 중복 피하기 위함)
 /// </summary>
-public class SceneManagerEx : MonoBehaviour
+public class SceneManagerEx
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
 
     public void LoadScene(Define.Scene type)
     {
-        //현재 OpenScene 날림
-        CurrentScene.Clear();
+        Managers.Clear();
         SceneManager.LoadScene(GetSceneName(type));
     }
 
@@ -21,5 +20,10 @@ public class SceneManagerEx : MonoBehaviour
     {
         string name = System.Enum.GetName(typeof(Define.Scene), type);
         return name;
+    }
+
+    public void Clear()
+    {
+        CurrentScene.Clear();
     }
 }

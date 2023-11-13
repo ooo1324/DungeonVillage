@@ -116,4 +116,10 @@ public class UIManager
             ClosePopupUI();
 
     }
+
+    public void Clear()
+    {
+        CloseAllPopupUI();
+        sceneUI = null;
+    }
 }
