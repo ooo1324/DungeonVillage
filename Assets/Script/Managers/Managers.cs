@@ -13,6 +13,7 @@ public class Managers : MonoBehaviour
     #region private Manager 函荐甸
 
     InputManager _inputManager = new InputManager();
+    PoolManager _poolManager = new PoolManager();
     ResourceManager _resourceManager = new ResourceManager();
     SceneManagerEx _sceneManager = new SceneManagerEx();
     SoundManager _soundManager = new SoundManager();
@@ -26,6 +27,11 @@ public class Managers : MonoBehaviour
     /// Input Manager : 涝仿 包府 概聪历
     /// </summary>
     public static InputManager Input { get { return Instance._inputManager; } }
+
+    /// <summary>
+    /// Pool Manager : Pool 包府 概聪历
+    /// </summary>
+    public static PoolManager Pool { get { return Instance._poolManager; } }
 
     /// <summary>
     /// ResourceManager : 府家胶 Load, Destroy 包府 概聪历
@@ -78,6 +84,7 @@ public class Managers : MonoBehaviour
 
             _instance = managerObj.GetComponent<Managers>();
 
+            _instance._poolManager.Init();
             _instance._soundManager.Init();
         }
 
@@ -89,5 +96,6 @@ public class Managers : MonoBehaviour
         Input.Clear();
         Scene.Clear();
         UI.Clear();
+        Pool.Clear();
     }
 }
