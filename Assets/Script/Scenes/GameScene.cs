@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
+    Coroutine co;
     protected override void Init()
     {
         base.Init();
@@ -11,14 +12,11 @@ public class GameScene : BaseScene
         SceneType = Define.Scene.Game;
 
         Managers.UI.ShowSceneUI<UI_Inven>();
-
-        for (int i = 0; i < 5; i++)
-            Managers.Resource.Instantiate("Player");
     }
+
 
     public override void Clear()
     {
         
     }
-
 }

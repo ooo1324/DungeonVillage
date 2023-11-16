@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateDie()
     {
-        // 아무것도 몬함
+       
     }
 
     void UpdateMoving()

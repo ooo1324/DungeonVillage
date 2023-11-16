@@ -12,6 +12,7 @@ public class Managers : MonoBehaviour
 
     #region private Manager 변수들
 
+    DataManager _dataManager = new DataManager();
     InputManager _inputManager = new InputManager();
     PoolManager _poolManager = new PoolManager();
     ResourceManager _resourceManager = new ResourceManager();
@@ -22,6 +23,11 @@ public class Managers : MonoBehaviour
     #endregion
 
     #region static Manager properties
+
+    /// <summary>
+    /// DataManager : Data 관리 매니저 
+    /// </summary>
+    public static DataManager Data { get { return Instance._dataManager; } }
 
     /// <summary>
     /// Input Manager : 입력 관리 매니저
@@ -84,10 +90,10 @@ public class Managers : MonoBehaviour
 
             _instance = managerObj.GetComponent<Managers>();
 
+            _instance._dataManager.Init();
             _instance._poolManager.Init();
             _instance._soundManager.Init();
         }
-
     }
 
     public static void Clear()
