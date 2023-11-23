@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 10.0f;
-
-   // bool moveToDest = false;
+    PlayerStat stat;
     Vector3 destPos;
 
     void Awake()
@@ -18,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
+        stat = GetComponent<PlayerStat>();
     }
 
     public enum PlayerState
@@ -26,9 +24,7 @@ public class PlayerController : MonoBehaviour
         Die,
         Moving,
         Idle,
-        Channeling,
-        Jumping,
-        Falling
+        Skill
     }
 
     PlayerState state = PlayerState.Idle;
@@ -44,23 +40,36 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = destPos - transform.position;
 
         // 정확한 0이 나오지 않을때가 있기 때문에 유의
-        if (dir.magnitude < 0.0001f)
+        if (dir.magnitude < 0.1f)
         {
            // moveToDest = false;
             state = PlayerState.Idle;
         }
         else
         {
-            // Clamp 최소 최대 범위 제한
-            float moveDist = Mathf.Clamp(speed * Time.deltaTime, 0, dir.magnitude);
+            //TODO
+            NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
 
-            transform.position += dir.normalized * moveDist;
+            // Clamp 최소 최대 범위 제한
+            float moveDist = Mathf.Clamp(stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
+
+            //nma.CalculatePath()
+            nma.Move(dir.normalized * moveDist);
+
+            Debug.DrawRay(transform.position + Vector3.up * 2f, dir.normalized, Color.green);
+            if (Physics.Raycast(transform.position + Vector3.up * 2f, dir, 1f, LayerMask.GetMask("Block")))
+            {
+                state = PlayerState.Idle;
+                return;
+            }
+
+            //transform.position += dir.normalized * moveDist;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 20 * Time.deltaTime);
         }
 
 
         Animator anim = GetComponent<Animator>();
-        anim.SetFloat("speed", speed);
+        anim.SetFloat("speed", stat.MoveSpeed);
   
     }
 
@@ -88,6 +97,36 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
+    int mask = (1 << (int)Define.Layer.Ground) | (1 <<  (int)Define.Layer.Monster);
+
+    void OnMouseClicked(Define.MouseEvent evt)
+    {
+        if (state == PlayerState.Die)
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100f, mask))
+        {
+            // hit.point : hit 위치를 월드좌표 기준으로 반환해줌
+            destPos = hit.point;
+            state = PlayerState.Moving;
+            //moveToDest = true;
+
+            if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+            {
+                Debug.Log("Monster");
+            }
+            else
+            {
+                Debug.Log("Ground");
+            }
+        }
+    }
+
+    #region Old
     //void OnKeyboard()
     //{
     //    if (Input.GetKey(KeyCode.W))
@@ -115,22 +154,5 @@ public class PlayerController : MonoBehaviour
     //    }
     //    moveToDest = false;
     //}
-
-    void OnMouseClicked(Define.MouseEvent evt)
-    {
-        if (state == PlayerState.Die)
-            return;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
-
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("Wall")))
-        {
-            // hit.point : hit 위치를 월드좌표 기준으로 반환해줌
-            destPos = hit.point;
-            state = PlayerState.Moving;
-            //moveToDest = true;
-        }
-    }
+    #endregion
 }
