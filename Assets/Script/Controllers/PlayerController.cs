@@ -8,14 +8,29 @@ public class PlayerController : MonoBehaviour
     PlayerStat stat;
     Vector3 destPos;
 
+    Texture2D attackIcon;
+    Texture2D handIcon;
+
+    enum CursorType
+    {
+        None,
+        Attack,
+        Hand,
+    }
+
+    CursorType cursorType = CursorType.None;
+
     void Awake()
     {
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
+        Managers.Input.MouseAction -= OnMouseEvent;
+        Managers.Input.MouseAction += OnMouseEvent;
     }
 
     void Start()
     {
+        attackIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Cursor_Attack");
+        handIcon = Managers.Resource.Load<Texture2D>("Textures/Cursor/Cursor_Hand");
+
         stat = GetComponent<PlayerStat>();
     }
 
@@ -40,7 +55,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = destPos - transform.position;
 
         // 정확한 0이 나오지 않을때가 있기 때문에 유의
-        if (dir.magnitude < 0.1f)
+        if (dir.magnitude < 0.3f)
         {
            // moveToDest = false;
             state = PlayerState.Idle;
@@ -59,7 +74,8 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position + Vector3.up * 2f, dir.normalized, Color.green);
             if (Physics.Raycast(transform.position + Vector3.up * 2f, dir, 1f, LayerMask.GetMask("Block")))
             {
-                state = PlayerState.Idle;
+                if(Input.GetMouseButton(0) == false)
+                    state = PlayerState.Idle;
                 return;
             }
 
@@ -83,6 +99,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        UpdateMouseCursor();
+
         switch (state)
         {
             case PlayerState.Die:
@@ -97,32 +115,79 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-    int mask = (1 << (int)Define.Layer.Ground) | (1 <<  (int)Define.Layer.Monster);
-
-    void OnMouseClicked(Define.MouseEvent evt)
+    /// <summary>
+    /// 마우스 커서 관리 Update 함수
+    /// </summary>
+    void UpdateMouseCursor()
     {
-        if (state == PlayerState.Die)
+        if (Input.GetMouseButton(0))
             return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f, mask))
         {
-            // hit.point : hit 위치를 월드좌표 기준으로 반환해줌
-            destPos = hit.point;
-            state = PlayerState.Moving;
-            //moveToDest = true;
-
             if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
             {
-                Debug.Log("Monster");
+                if (cursorType != CursorType.Attack)
+                {
+                    Cursor.SetCursor(attackIcon, new Vector2(attackIcon.width / 5, 0), CursorMode.Auto);
+                    cursorType = CursorType.Attack;
+                }             
             }
             else
             {
-                Debug.Log("Ground");
+                if (cursorType != CursorType.Hand)
+                {
+                    Cursor.SetCursor(handIcon, new Vector2(handIcon.width / 3, 0), CursorMode.Auto);
+                    cursorType = CursorType.Hand;               
+                }                  
             }
+        }
+    }
+
+    int mask = (1 << (int)Define.Layer.Ground) | (1 <<  (int)Define.Layer.Monster);
+
+    GameObject lockTarget;
+
+    void OnMouseEvent(Define.MouseEvent evt)
+    {
+        if (state == PlayerState.Die)
+            return;
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool raycastHit = Physics.Raycast(ray, out hit, 100f, mask);
+
+        switch (evt)
+        {
+            case Define.MouseEvent.PointerDown:
+                {
+                    if (raycastHit)
+                    {
+                        destPos = hit.point;
+                        state = PlayerState.Moving;
+
+                        if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
+                            lockTarget = hit.collider.gameObject;
+                        else
+                            lockTarget = null;
+                    }
+                }
+                break;          
+            case Define.MouseEvent.Press:
+                {
+                    if (lockTarget != null)
+                        destPos = lockTarget.transform.position;
+                    else
+                        if (raycastHit)
+                            destPos = hit.point;
+                }
+                break;
+            case Define.MouseEvent.PointerUp:
+                lockTarget = null;
+                break;
         }
     }
 
