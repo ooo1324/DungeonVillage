@@ -39,6 +39,23 @@ public class UIManager
         }
     }
 
+    public T MakeWorldSpaceUI<T>(Transform parent = null, string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject obj = Managers.Resource.Instantiate($"UI/WorldSpace/{name}");
+
+        if (parent != null)
+            obj.transform.SetParent(parent);
+
+        Canvas canvas = obj.GetOrAddComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.worldCamera = Camera.main;
+
+        return Util.GetOrAddComponent<T>(obj);
+    }
+
     public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))

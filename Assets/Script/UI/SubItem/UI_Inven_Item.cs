@@ -13,11 +13,6 @@ public class UI_Inven_Item : UI_Base
 
     string name;
 
-    private void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));

@@ -12,6 +12,8 @@ public class GameScene : BaseScene
         SceneType = Define.Scene.Game;
 
         Managers.UI.ShowSceneUI<UI_Inven>();
+
+        gameObject.GetOrAddComponent<CursorController>();
     }
 
 
