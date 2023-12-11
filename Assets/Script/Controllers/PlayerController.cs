@@ -12,15 +12,14 @@ public class PlayerController : BaseController
 
     bool stopSkill = false;
 
-    protected override void Init()
+    public override void Init()
     {
-       // base.Init();
-
         stat = GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
         Managers.Input.MouseAction += OnMouseEvent;
 
-        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
+        if (gameObject.GetComponentInChildren<UI_HPBar>() == null)
+            Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
     protected override void UpdateMoving()
@@ -48,15 +47,6 @@ public class PlayerController : BaseController
         }
         else
         {
-            //TODO
-            NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
-
-            // Clamp 최소 최대 범위 제한
-            float moveDist = Mathf.Clamp(stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
-
-            //nma.CalculatePath()
-            nma.Move(dir.normalized * moveDist);
-
             Debug.DrawRay(transform.position + Vector3.up * 2f, dir.normalized, Color.green);
             if (Physics.Raycast(transform.position + Vector3.up * 2f, dir, 1f, LayerMask.GetMask("Block")))
             {
@@ -65,7 +55,8 @@ public class PlayerController : BaseController
                 return;
             }
 
-            //transform.position += dir.normalized * moveDist;
+            float moveDist = Mathf.Clamp(stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
+            transform.position += dir.normalized * moveDist;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 20 * Time.deltaTime);
         }
     }
@@ -84,11 +75,9 @@ public class PlayerController : BaseController
     {
         if (lockTarget != null)
         {
-            // TODO
             Stat targetStat = lockTarget.GetComponent<Stat>();
             PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
             int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-            Debug.Log(damage);
             targetStat.Hp -= damage;
         }
 

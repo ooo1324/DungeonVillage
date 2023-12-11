@@ -61,7 +61,7 @@ public abstract class BaseController : MonoBehaviour
         }
     }
 
-    protected abstract void Init();
+    public abstract void Init();
     protected virtual void UpdateDie() { }
     protected virtual void UpdateMoving() { }
     protected virtual void UpdateIdle() { }
