@@ -14,7 +14,7 @@ public class PlayerController : BaseController
 
     protected override void Init()
     {
-        base.Init();
+       // base.Init();
 
         stat = GetComponent<PlayerStat>();
         Managers.Input.MouseAction -= OnMouseEvent;
