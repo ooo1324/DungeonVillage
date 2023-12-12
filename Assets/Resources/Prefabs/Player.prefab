@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 680231173}
   - component: {fileID: 680231172}
   - component: {fileID: 1505133669693386466}
-  - component: {fileID: 680231176}
   - component: {fileID: 680231183}
   m_Layer: 0
   m_Name: Player
@@ -62,8 +61,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6732007319916249978}
-  m_LocalRotation: {x: 0, y: 0.99999994, z: 0, w: 0.0003229187}
-  m_LocalPosition: {x: 435.87106, y: -0.0000104904175, z: 461.42453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -71,7 +70,7 @@ Transform:
   - {fileID: 6732007319916586996}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 179.963, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6732007319907043202
 Animator:
   serializedVersion: 5
@@ -151,28 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
---- !u!195 &680231176
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6732007319916249978}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: -0.1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &680231183
 MonoBehaviour:
   m_ObjectHideFlags: 0

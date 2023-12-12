@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private GameObject player = null;
 
+    public void SetPlayer(GameObject playerObj) { player = playerObj; }
 
     void Start()
     {
@@ -23,6 +24,11 @@ public class CameraController : MonoBehaviour
     {
         if (_mode == Define.CameraMode.QuerterView)
         {
+            if (!player.IsValid())
+            {
+                return;
+            }
+
             RaycastHit hit;
             if (Physics.Raycast(player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {

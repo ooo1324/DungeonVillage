@@ -10,8 +10,16 @@ public class Managers : MonoBehaviour
     public static Managers Instance { get { Init(); return _instance; } }
     #endregion
 
-    #region private Manager º¯¼öµé
+    #region Contents
+    GameManager gameManager = new GameManager();
 
+    /// <summary>
+    /// GameManager 
+    /// </summary>
+    public static GameManager Game { get { return Instance.gameManager; } }
+    #endregion
+
+    #region Core
     DataManager _dataManager = new DataManager();
     InputManager _inputManager = new InputManager();
     PoolManager _poolManager = new PoolManager();
@@ -19,8 +27,6 @@ public class Managers : MonoBehaviour
     SceneManagerEx _sceneManager = new SceneManagerEx();
     SoundManager _soundManager = new SoundManager();
     UIManager _uiManager = new UIManager();
-
-    #endregion
 
     #region static Manager properties
 
@@ -59,6 +65,9 @@ public class Managers : MonoBehaviour
     /// </summary>
     public static UIManager UI { get { return Instance._uiManager; } }
     #endregion
+
+    #endregion
+
 
 
     private static string managersName = "@Managers";
