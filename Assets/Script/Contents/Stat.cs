@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,5 +38,31 @@ public class Stat : MonoBehaviour
         attack = 10;
         defense = 5;
         MoveSpeed = 15;
+    }
+
+    public virtual void OnAttacked(Stat attacker)
+    {
+        int damage = Mathf.Max(0, attacker.Attack - Defence);
+        Hp -= damage;
+
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            OnDead(attacker);
+        }
+
+    }
+
+    protected virtual void OnDead(Stat attacker)
+    {
+        PlayerStat playerStat = attacker as PlayerStat;
+
+        if (playerStat != null)
+        {
+            // TODO: 몬스터 고유의 경험치로 변경해야 함
+            playerStat.Exp += 15;
+        }
+
+        Managers.Game.Despawn(gameObject);
     }
 }

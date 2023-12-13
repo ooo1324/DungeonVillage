@@ -8,6 +8,8 @@ public class GameManager
 
     HashSet<GameObject> monsterDic = new HashSet<GameObject>();
 
+    public GameObject GetPlayer() { return player; }
+
     public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
     {
         GameObject obj = Managers.Resource.Instantiate(path, parent);

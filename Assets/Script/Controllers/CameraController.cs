@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
             }
 
             RaycastHit hit;
-            if (Physics.Raycast(player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
+            if (Physics.Raycast(player.transform.position, _delta, out hit, _delta.magnitude, 1 << (int)Define.Layer.Block))
             {
                 // 방향 벡터의 크기
                 float dist = (hit.point - player.transform.position).magnitude * 0.8f;
