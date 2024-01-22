@@ -2909,6 +2909,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 155168, guid: cf3a5c2462d00ed4c9ee956b9a48e0b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 435488, guid: cf3a5c2462d00ed4c9ee956b9a48e0b8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2982,10 +2986,35 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8949859448689068745, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949859448726524373, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949859448767054248, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949859449250054343, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8949859449619895954, guid: 7c331270d9941ec4b91015141cc9d171,
         type: 3}
       propertyPath: m_Name
       value: UI_HPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949859449619895954, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949859449619896046, guid: 7c331270d9941ec4b91015141cc9d171,
         type: 3}
@@ -3096,6 +3125,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949859450599538770, guid: 7c331270d9941ec4b91015141cc9d171,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c331270d9941ec4b91015141cc9d171, type: 3}

@@ -27,7 +27,7 @@ public class UI_Inven : UI_Scene
         inven_item.SetInfo($"도란반지");
 
         //실제 인벤토리 정보 참고해서 넣기
-        for (int i = 0; i < 19; i++)
+        for (int i = 0; i < 50; i++)
         {
             GameObject item2 = Managers.UI.MakeSubItem<UI_Inven_Item>(parent : gridPanel.transform, "UI_Inven_Item_not").gameObject;
 

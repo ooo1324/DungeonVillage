@@ -30,6 +30,7 @@ public class Define
     {
         Unknown,
         Login,
+        Loading,
         Lobby,
         Game
     }
