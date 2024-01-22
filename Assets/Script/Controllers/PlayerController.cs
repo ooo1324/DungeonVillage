@@ -32,7 +32,7 @@ public class PlayerController : BaseController
             destPos = lockTarget.transform.position;
             float distance = (destPos - transform.position).magnitude;
 
-            if (distance <= 1)
+            if (distance <= 3)
             {
                 State = Define.State.Skill;
                 return;
@@ -42,8 +42,11 @@ public class PlayerController : BaseController
         // 방향벡터 계산
         Vector3 dir = destPos - transform.position;
 
+        // TODO : Terrian의 HeightMap에서 높이 추출하는 걸로 바꾸기
+        dir.y = 0;
+
         // 정확한 0이 나오지 않을때가 있기 때문에 유의
-        if (dir.magnitude < 0.3f)
+        if (dir.magnitude < 0.4f)
         {
             State = Define.State.Idle;
         }

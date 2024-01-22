@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class GameManager
     GameObject player;
 
     HashSet<GameObject> monsterDic = new HashSet<GameObject>();
+
+    public Action<int> OnSpawnEvent;
 
     public GameObject GetPlayer() { return player; }
 
@@ -18,6 +21,8 @@ public class GameManager
         {
             case Define.WorldObject.Monster:
                 monsterDic.Add(obj);
+                if (OnSpawnEvent != null)
+                    OnSpawnEvent.Invoke(1);
                 break;
             case Define.WorldObject.Player:
                 player = obj;
@@ -46,7 +51,11 @@ public class GameManager
             case Define.WorldObject.Monster:
                 {
                     if (monsterDic.Contains(obj))
+                    {
                         monsterDic.Remove(obj);
+                        if (OnSpawnEvent != null)
+                            OnSpawnEvent.Invoke(-1);
+                    }    
                 }
                 break;
             case Define.WorldObject.Player:
